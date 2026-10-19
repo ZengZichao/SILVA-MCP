@@ -1,0 +1,60 @@
+{
+  "name": "silva-mcp",
+  "version": "0.1.0",
+  "description": "A Model Context Protocol (MCP) server for the SILVA rRNA database (https://www.arb-silva.de/). Provides tools for searching sequences, browsing taxonomy, matching probes/primers (TestProbe & TestPrime), and retrieving sequence details.",
+  "license": "MIT",
+  "author": "SILVA-MCP Contributors",
+  "homepage": "https://github.com/SILVA-MCP/silva-mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SILVA-MCP/silva-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SILVA-MCP/silva-mcp/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "silva",
+    "rrna",
+    "16s",
+    "18s",
+    "23s",
+    "28s",
+    "bioinformatics",
+    "taxonomy",
+    "probe",
+    "primer"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "bin": {
+    "silva-mcp": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc && node dist/index.js",
+    "clean": "rimraf dist",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "README.en.md",
+    "README.zh.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.7.0"
+  }
+}
