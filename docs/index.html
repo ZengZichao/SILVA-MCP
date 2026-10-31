@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SILVA-MCP — A Model Context Protocol Server for the SILVA rRNA Database</title>
+  <meta name="description" content="A Model Context Protocol (MCP) Server for the SILVA rRNA Database. Enables AI assistants to search sequences, match probes, and browse taxonomy through standardized MCP tools.">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- ─── Navigation ─────────────────────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-container">
+    <a href="#top" class="nav-brand">SILVA-MCP</a>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#tools">Tools</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#install">Install</a></li>
+      <li><a href="https://github.com/ZengZichao/SILVA-MCP">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ─── Hero ───────────────────────────────────────────────────────────── -->
+<header id="top" class="hero">
+  <div class="hero-container">
+    <p class="hero-eyebrow">Model Context Protocol &middot; Bioinformatics &middot; rRNA</p>
+    <h1 class="hero-title">SILVA-MCP</h1>
+    <p class="hero-subtitle">
+      A Model Context Protocol server for the
+      <a href="https://www.arb-silva.de/" target="_blank" rel="noopener">SILVA rRNA database</a>.
+    </p>
+    <div class="hero-meta">
+      <span class="badge">Version 0.1.0</span>
+      <span class="badge">MIT License</span>
+      <span class="badge">Node.js &ge; 18</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#install" class="btn btn-primary">Get Started</a>
+      <a href="https://github.com/ZengZichao/SILVA-MCP" class="btn btn-secondary" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
+  </div>
+</header>
+
+<!-- ─── Overview ───────────────────────────────────────────────────────── -->
+<section id="overview" class="section">
+  <div class="container">
+    <h2 class="section-title">Overview</h2>
+    <div class="section-body">
+      <p>
+        <strong>SILVA-MCP</strong> is a
+        <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">Model Context Protocol</a>
+        server that exposes the SILVA rRNA database's web-service APIs as tools callable by
+        Large Language Models (LLMs). It enables AI assistants to search sequences, retrieve
+        detailed metadata, match probes and primers, and browse the SILVA taxonomy &mdash; all
+        through the standardized MCP interface.
+      </p>
+      <p>
+        SILVA is a comprehensive online resource for quality checked and regularly updated
+        ribosomal RNA (rRNA) sequence databases, maintained by the
+        <a href="https://www.dsmz.de/" target="_blank" rel="noopener">DSMZ</a>
+        (Leibniz Institute DSMZ &mdash; German Collection of Microorganisms and Cell Cultures GmbH).
+        SILVA provides aligned small (16S/18S, SSU) and large subunit (23S/28S, LSU) rRNA sequences
+        for all three domains of life (Bacteria, Archaea, and Eukarya).
+      </p>
+    </div>
+    <div class="callout callout-disclaimer">
+      <p>
+        <strong>Disclaimer:</strong> This is an <em>unofficial</em> community-driven project and is
+        not affiliated with, endorsed by, or officially connected to SILVA, DSMZ, or the SILVA
+        rRNA database team. SILVA is a registered trademark of its respective owners.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Features ───────────────────────────────────────────────────────── -->
+<section id="features" class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">Features</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">&#x1F50D;</div>
+        <h3>Sequence Search</h3>
+        <p>Search the SILVA database by organism name, accession number, strain, taxonomy, sequence length, quality, and more &mdash; with multi-field AND logic.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#x1F4C4;</div>
+        <h3>Sequence Detail Retrieval</h3>
+        <p>Get comprehensive metadata for a specific sequence, including multi-taxonomy classifications (SILVA, LPSN, GTDB, ENA), environmental metadata, and publication references.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#x1F9EC;</div>
+        <h3>TestProbe</h3>
+        <p>Submit a probe or primer sequence to find all matching sequences in the SILVA database with configurable mismatch tolerance (TestProbe 3.0).</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#x2697;</div>
+        <h3>TestPrime</h3>
+        <p>Evaluate the coverage and specificity of a forward/reverse primer pair against the entire SILVA database (TestPrime 1.0).</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#x1F333;</div>
+        <h3>Taxonomy Browser</h3>
+        <p>Generate direct URLs to the SILVA taxonomy browser for interactive exploration of sequence taxonomic context.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#x1F4DA;</div>
+        <h3>Database Listing</h3>
+        <p>Enumerate available databases and their supported taxonomy classification systems.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Tools ──────────────────────────────────────────────────────────── -->
+<section id="tools" class="section">
+  <div class="container">
+    <h2 class="section-title">Available Tools</h2>
+    <div class="table-wrap">
+      <table class="tool-table">
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>silva_search</code></td>
+            <td>Search for rRNA sequences matching one or more criteria</td>
+          </tr>
+          <tr>
+            <td><code>silva_sequence_detail</code></td>
+            <td>Get detailed information about a single sequence</td>
+          </tr>
+          <tr>
+            <td><code>silva_testprobe</code></td>
+            <td>Match a probe/primer against the SILVA database (TestProbe 3.0)</td>
+          </tr>
+          <tr>
+            <td><code>silva_testprime</code></td>
+            <td>Evaluate a primer pair's coverage and specificity (TestPrime 1.0)</td>
+          </tr>
+          <tr>
+            <td><code>silva_browser</code></td>
+            <td>Get the SILVA taxonomy browser URL for a sequence</td>
+          </tr>
+          <tr>
+            <td><code>silva_list_databases</code></td>
+            <td>List available databases and their taxonomies</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Architecture ───────────────────────────────────────────────────── -->
+<section id="architecture" class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">Architecture</h2>
+    <div class="section-body">
+      <p>The server communicates over stdio using the MCP protocol. When an MCP client sends a tool-call request, the server validates arguments with Zod schemas, dispatches to the SILVA web-service client, and returns parsed JSON results.</p>
+    </div>
+    <div class="arch-diagram">
+      <div class="arch-flow">
+        <div class="arch-node">
+          <span class="arch-label">MCP Client</span>
+          <span class="arch-sub">Claude Desktop, Cursor, &hellip;</span>
+        </div>
+        <div class="arch-arrow">&rarr;</div>
+        <div class="arch-node">
+          <span class="arch-label">SILVA-MCP Server</span>
+          <span class="arch-sub">stdio transport &middot; Zod validation</span>
+        </div>
+        <div class="arch-arrow">&rarr;</div>
+        <div class="arch-node">
+          <span class="arch-label">SILVA Web Service</span>
+          <span class="arch-sub"><code>legatum.arb-silva.de/WS/</code></span>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="subsection-title">Source Layout</h3>
+<pre class="code-block"><code>SILVA-MCP/
+├── package.json          # npm package configuration
+├── tsconfig.json         # TypeScript compiler configuration
+├── src/
+│   ├── index.ts          # MCP server entry point (stdio transport)
+│   ├── tools.ts          # Tool definitions and dispatch handlers
+│   ├── silvaClient.ts    # SILVA web-service API client
+│   ├── constants.ts      # Database constants and field mappings
+│   ├── types.ts          # TypeScript type definitions
+│   └── htmlParser.ts     # HTML parsing utilities for API responses
+├── README.md             # Quick start guide
+├── README.en.md          # English documentation
+└── README.zh.md          # Chinese documentation</code></pre>
+  </div>
+</section>
+
+<!-- ─── Installation ───────────────────────────────────────────────────── -->
+<section id="install" class="section">
+  <div class="container">
+    <h2 class="section-title">Installation &amp; Configuration</h2>
+
+    <h3 class="subsection-title">Prerequisites</h3>
+    <ul class="list">
+      <li><strong>Node.js</strong> &ge; 18.0.0 (tested on Node.js 20+)</li>
+      <li>An MCP-compatible client (e.g., <a href="https://claude.ai/download" target="_blank" rel="noopener">Claude Desktop</a>, <a href="https://cursor.com/" target="_blank" rel="noopener">Cursor</a>, or any <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">MCP SDK</a> consumer)</li>
+    </ul>
+
+    <h3 class="subsection-title">Build from Source</h3>
+<pre class="code-block"><code>git clone https://github.com/ZengZichao/SILVA-MCP.git
+cd SILVA-MCP
+npm install
+npm run build</code></pre>
+
+    <h3 class="subsection-title">Configure Your MCP Client</h3>
+    <p>Add the SILVA-MCP server to your MCP client's configuration file:</p>
+<pre class="code-block"><code>{
+  "mcpServers": {
+    "silva-mcp": {
+      "command": "node",
+      "args": ["/absolute/path/to/SILVA-MCP/dist/index.js"]
+    }
+  }
+}</code></pre>
+
+    <h3 class="subsection-title">Example Usage</h3>
+    <p>Once configured, the tools are available to your AI assistant. You can ask questions like:</p>
+    <ul class="list list-quotes">
+      <li>&ldquo;Search the SILVA database for sequences from the organism <em>Escherichia coli</em>&rdquo;</li>
+      <li>&ldquo;Find the sequence detail for SILVA ID 12893389 in the SSU database&rdquo;</li>
+      <li>&ldquo;Test the probe CGCCTCCCTCTACCGTTT against the SSU RefNR database with 1 mismatch&rdquo;</li>
+      <li>&ldquo;Evaluate the primer pair AGAGTTTGATCCTGGCTCAG and GGTTACCTTGTTACGACTT against SSU r144&rdquo;</li>
+      <li>&ldquo;What databases are available in SILVA?&rdquo;</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ─── Databases ──────────────────────────────────────────────────────── -->
+<section id="databases" class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">SILVA Databases</h2>
+    <div class="table-wrap">
+      <table class="tool-table">
+        <thead>
+          <tr>
+            <th>Database ID</th>
+            <th>Description</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>ssu-144</code></td>
+            <td>SSU Ref/RefNR release 144 (16S/18S)</td>
+            <td>Small Subunit</td>
+          </tr>
+          <tr>
+            <td><code>lsu-138.2</code></td>
+            <td>LSU Ref/RefNR release 138.2 (23S/28S)</td>
+            <td>Large Subunit</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="section-body">
+      <p>
+        The current SILVA release 144 contains over <strong>2.2 million</strong> SSU and
+        <strong>350,000</strong> LSU aligned rRNA sequences. SILVA provides its own taxonomy,
+        plus mappings to LPSN, GTDB, ENA, LTP, and RDP classification systems.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Citation ───────────────────────────────────────────────────────── -->
+<section id="citation" class="section">
+  <div class="container">
+    <h2 class="section-title">Citation</h2>
+    <div class="callout callout-cite">
+      <p class="cite-text">
+        Quast C, Pruesse E, Yilmaz P, Gerken J, Schweer T, Yarza P, Peplies J, Gl&ouml;ckner FO (2013).
+        The SILVA ribosomal RNA gene database project: improved data processing and web-based tools.
+        <em>Nucleic Acids Research</em> 41(D1): D590&ndash;D596.
+        doi: <a href="https://doi.org/10.1093/nar/gks1219" target="_blank" rel="noopener">10.1093/nar/gks1219</a>
+      </p>
+    </div>
+    <div class="callout callout-cite">
+      <p class="cite-text">
+        SILVA-MCP: A Model Context Protocol Server for the SILVA rRNA Database. Version 0.1.0.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Footer ─────────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2026 SILVA-MCP Contributors &middot; MIT License</p>
+    <p class="footer-links">
+      <a href="https://github.com/ZengZichao/SILVA-MCP">GitHub</a>
+      &middot;
+      <a href="https://github.com/ZengZichao/SILVA-MCP/issues">Issues</a>
+      &middot;
+      <a href="https://www.arb-silva.de/" target="_blank" rel="noopener">SILVA</a>
+      &middot;
+      <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">MCP</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
